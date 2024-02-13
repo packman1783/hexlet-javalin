@@ -10,7 +10,7 @@ public class HelloWorld {
         });
         // Описываем, что загрузится по адресу /
         app.get("/", ctx -> ctx.result("Hello World"));
-        app.start(7070); // Стартуем веб-сервер
+        app.start(7070); // Стартуем веб-сервер !
     }
 }
 
