@@ -22,6 +22,13 @@ public class HelloWorld {
             }
         });
 
+        // запрос http://localhost:7070/users/123/post/456
+        app.get("/users/{id}/post/{postId}", ctx -> {
+            String userId = ctx.pathParam("id");
+            String postId = ctx.pathParam("postId");
+            ctx.result("User ID: " + userId + ", Post ID: " + postId);
+        });
+
         app.start(7070);
         //завершить запрос ctrl + c
     }
