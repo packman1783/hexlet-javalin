@@ -1,6 +1,7 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
+import io.javalin.http.NotFoundResponse;
 
 import java.util.Collections;
 
@@ -31,15 +32,34 @@ public class HelloWorld {
             ctx.result("User ID: " + userId + ", Post ID: " + postId);
         });
 
-        //запрос http://localhost:7070/courses/0 or 1 or 2
+        //запрос http://localhost:7070/courses
+        app.get("/courses", ctx -> {
+            var courses = CourseList.CreatedList();
+            var header = "All Courses";
+            var page = new CoursePage(courses, header);
+            ctx.render("allCourses.jte", Collections.singletonMap("page", page));
+        });
+
+        // запрос http://localhost:7070/courses/0 or 1 or 2
         app.get("/courses/{id}", ctx -> {
-            var id = ctx.pathParam("id");
-            var courseId = Integer.parseInt(id);
-            var courses = CourseList.createSampleCourseList();
-            var header = "Programming courses";
-            var course = courses.get(courseId); // Получаем курс по его индексу
-            var page = new CoursePage(Collections.singletonList(course), header); // Создаем страницу только для одного курса
-            ctx.render("index.jte", Collections.singletonMap("page", page));
+                    var id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
+
+                    var courses = CourseList.CreatedList();
+
+                    var course = courses.stream()
+                            .filter(c -> c.getId() == id)
+                            .findFirst()
+                            .orElse(null);
+
+                    if (course == null) {
+                        ctx.status(404);
+                        return;
+                    }
+
+            var header = "Course: " + course.getName();
+
+            var page = new CoursePage(Collections.singletonList(course), header);
+            ctx.render("singleCourse.jte", Collections.singletonMap("page", page));
         });
 
         app.start(7070);
