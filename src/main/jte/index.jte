@@ -1,4 +1,3 @@
-@import org.example.hexlet.Course
 @import org.example.hexlet.CoursePage
 @param CoursePage page
 
