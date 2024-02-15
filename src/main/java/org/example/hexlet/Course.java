@@ -1,4 +1,3 @@
-
 package org.example.hexlet;
 
 import lombok.Getter;
@@ -9,11 +8,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public final class Course {
+    private int id;
 
     @ToString.Include
     private String name;
     private String description;
-    private  int id;
+
 
     public Course(int id, String name, String description) {
         this.id = id;
