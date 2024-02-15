@@ -1,7 +1,6 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
-import io.javalin.http.NotFoundResponse;
 
 import java.util.Collections;
 
